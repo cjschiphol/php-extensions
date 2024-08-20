@@ -1,0 +1,29 @@
+name: on-push-main
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-extension:
+    uses: './.github/workflows/action.extension-build.yaml'
+    secrets: inherit
+    with:
+      context: php-83/alpine/intl
+      extension: intl
+  release:
+    uses: './.github/workflows/action.create-release.yaml'
+    needs: [ build-extension ]
+    secrets: inherit
+    with:
+     extension: intl
+  apk-build:
+    uses: './.github/workflows/action.alpine-apk-build.yaml'
+    needs: [ release ]
+    secrets: inherit
+    with:
+      extension: intl

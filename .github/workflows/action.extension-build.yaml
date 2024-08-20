@@ -1,0 +1,52 @@
+on:
+  workflow_call:
+    inputs:
+      dockerfile:
+        type: string
+        required: false
+      target:
+        type: string
+        required: false
+      context:
+        type: string
+        required: false
+        default: .
+      build-args:
+        type: string
+        required: false
+        default: ''
+      extension:
+        type: string
+        required: true
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    permissions: read-all
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/build-push-action@v5
+        id: docker_build
+        with:
+          context: ${{ inputs.context }}
+          file: ${{ inputs.dockerfile }}
+          push: false
+          load: true
+          target: ${{ inputs.target }}
+          build-args: |
+            ${{ inputs.build-args }}
+      - name: Copy extension from docker image
+        run: |
+          mkdir -p $GITHUB_WORKSPACE/artifacts
+          
+          CONTAINERID=$(docker run -d "${{ steps.docker_build.outputs.imageid }}" sleep 60)
+          docker cp "$CONTAINERID":/extension/${{ inputs.extension }}.so $GITHUB_WORKSPACE/artifacts/${{ inputs.extension }}.so
+          docker kill "$CONTAINERID"
+      - name: List copied files
+        run: |
+          ls -al  $GITHUB_WORKSPACE/artifacts
+      - name: upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: extension
+          path: artifacts
+          if-no-files-found: error
