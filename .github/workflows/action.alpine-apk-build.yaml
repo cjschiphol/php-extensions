@@ -8,6 +8,7 @@ on:
 jobs:
   apk-build:
     runs-on: ubuntu-latest
+    permissions: {}
     steps:
       - uses: actions/checkout@v4
       - uses: ivanvc/abuild-releaser-action@main
@@ -84,7 +85,7 @@ jobs:
             dpZkuhfkMkp6IPibnz2I4sK8c3yb
             -----END PRIVATE KEY-----
 #          alpine_branch: 'latest-stable'
-          packages_dir: 'php-83/alpine/intl'
+          packages_dirs: 'php-83/alpine/intl'
           generate_index_pages: "false"
           generate_single_index_page: "true"
 
