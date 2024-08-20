@@ -21,7 +21,10 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
-    permissions: {}
+    permissions:
+      pages: write
+      contents: write
+
     steps:
       - uses: actions/checkout@v4
       - uses: docker/build-push-action@v5
