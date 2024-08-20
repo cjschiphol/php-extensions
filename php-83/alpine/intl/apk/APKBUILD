@@ -6,12 +6,12 @@ pkgrel=0
 pkgdesc="Intl PHP extension"
 
 url="https://github.com/cjschiphol/php-extensions"
-arch="aarch64"
+arch="x86_64"
 license="GPL"
 depends_dev=""
 depends="icu icu-data-full"
 install=""
-source="https://github.com/cjschiphol/php-extensions/releases/download/intl-8.3.10/intl-8.3.10-extension-aarch64-alpine.tar.gz"
+source="https://github.com/cjschiphol/php-extensions/releases/download/intl-8.3.10/intl-8.3.10-extension-x86_64-alpine.tar.gz"
 options="!check"
 
 package() {

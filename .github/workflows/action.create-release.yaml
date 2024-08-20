@@ -17,7 +17,7 @@ jobs:
       - name: Archive extension
         run: |
           mkdir -p assets
-          tar -czvf assets/${{ inputs.extension }}-8.3.10-extension-aarch64-alpine.tar.gz extension
+          tar -czvf assets/${{ inputs.extension }}-8.3.10-extension-amd64-alpine.tar.gz extension
       - name: Release
         uses: softprops/action-gh-release@v2
         #if: startsWith(github.ref, 'refs/tags/')
