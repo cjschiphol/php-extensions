@@ -85,6 +85,8 @@ jobs:
             -----END PRIVATE KEY-----
 #          alpine_branch: 'latest-stable'
           packages_dir: 'php-83/alpine/intl'
+          generate_index_pages: "false"
+          generate_single_index_page: "true"
 
 #      - name: Release
 #        uses: softprops/action-gh-release@v2
