@@ -8,7 +8,10 @@ on:
 jobs:
   apk-build:
     runs-on: ubuntu-latest
-    permissions: {}
+    permissions:
+      pull-requests: write
+      issues: write
+      repository-projects: write
     steps:
       - uses: actions/checkout@v4
       - uses: ivanvc/abuild-releaser-action@main
