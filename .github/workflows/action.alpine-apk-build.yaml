@@ -8,102 +8,39 @@ on:
 jobs:
   apk-build:
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      contents: write
-      packages: write
     steps:
       - uses: actions/checkout@v4
-      - uses: ivanvc/abuild-releaser-action@main
+#      - name: Setup QEMU
+#        run: docker run --rm --privileged aptman/qus -s -- -p aarch64
+      - name: Build APK
+        uses: docker/build-push-action@v5
+        id: docker_build
         with:
-          author: John Doe <john@example.com>
-          #rsa_public_key: ${{ secrets.RSA_PUBLIC_KEY }}
-          #rsa_private_key: ${{ secrets.RSA_PRIVATE_KEY }}
-          rsa_public_key: |
-            -----BEGIN PUBLIC KEY-----
-            MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAjYuBiqZsxRzT1AlcDwrD
-            g9c0No55C5X2c+u6LG4tc/p3tMEa+mLoT/I4otSXMvqvxma3LKjtRlOb3VmXezb0
-            eug8RVyoYY9B9mi380EpKRjF/ujr9Pe/EIV3QhLDnwIeE3Uwk0eqYP1LU7Wxomi4
-            6eXFEHxeu9HwK3twAtzfzcaghidgVgwHnAe3cKl646SC9fFELUCesBl4ew1LBxcE
-            eG6GwcUu7bNHY/mrV6TDB5Oy3lNEkzbxR58sTrbCo3o06bZerD3lAKoPhL9faTqk
-            GV+WHzyxJGFqZrteurzaqJ46hb3aMXTFVI1rqt+tZp9mx2nyJ08/gpEFGxzWOKWO
-            Y0F5UYQuiHShoONBu+HCYbGQEq4M/BhsvfKjfgp/fPl83IbuAo6pkJaRa2VAJfIR
-            9IIWmggUn/FcLYjbmRGis9diYFYO+z/OyVp6Zx9cjjs9SyA9IfK7T6NE9q98N72Y
-            ah4IW+L0JB69goQfT3yN6q7VKfmO0rubSDLKFcISzevvCb0s6OlrGOlo7A2n5IgA
-            rMSJLF1oAVM3ugHhmYLitPw12Nl2JNoVSYBQ5Wgg3NfjqOz/Ec8vlfxOcbHQ61ew
-            atkaNcM/XsLt1QbMvMmSp6rAoRWpd/Iaf2FAb/yPq3Ikm2a73LEcDRzwmNm6Jm7D
-            v/iNycIHuhi5MWCbksfUqKMCAwEAAQ==
-            -----END PUBLIC KEY-----
-          rsa_private_key: |
-            -----BEGIN PRIVATE KEY-----
-            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
-            dpZkuhfkMkp6IPibnz2I4sK8c3yb
-            -----END PRIVATE KEY-----
-#          alpine_branch: 'latest-stable'
-          packages_dirs: 'php-83/alpine/intl'
-          generate_index_pages: "false"
-          generate_single_index_page: "true"
-
-#      - name: Release
-#        uses: softprops/action-gh-release@v2
-#        #if: startsWith(github.ref, 'refs/tags/')
-#        with:
-#          draft: true
-#          tag_name: 'intl-8.3.10'
-#          make_latest: false
-#          #body_path: ${{ github.workspace }}-CHANGELOG.txt
-#          body: "Initial release"
-#          generate_release_notes: true
-#          token: ${{ secrets.DCS_PAT }}
-#          fail_on_unmatched_files: true
-#          files: |
-#            assets/*.tar.gz
-
+          context: .
+          file: apkbuild/Dockerfile
+          push: false
+          load: true
+          no-cache: true
+          secrets: |
+            "APK_PRIVATE_KEY=${{ secrets.APK_PRIVATE_KEY }}"
+            "APK_PUBLIC_KEY=${{ secrets.APK_PUBLIC_KEY }}"
+          build-args: |
+            "APK_SOURCE=php-83/alpine/intl"
+      - name: Copy apk from docker image
+        run: |        
+          CONTAINERID=$(docker run -d "${{ steps.docker_build.outputs.imageid }}" sleep 60)
+          docker cp "$CONTAINERID":/packages/ $GITHUB_WORKSPACE/packages
+          docker kill "$CONTAINERID"
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        #if: startsWith(github.ref, 'refs/tags/')
+        with:
+          draft: false
+          tag_name: 'intl-8.3.10'
+          make_latest: false
+          #body_path: ${{ github.workspace }}-CHANGELOG.txt
+          body: "Initial release"
+          token: ${{ secrets.DCS_PAT }}
+          fail_on_unmatched_files: true
+          files: |
+            packages/aarch64/php-extensions-intl-8.3.10-r0.apk

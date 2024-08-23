@@ -1,0 +1,4 @@
+#!/bin/sh
+
+/usr/bin/unlink "$(php -r "echo ini_get ('extension_dir');")/intl.so"
+rm "$(php -r "echo PHP_CONFIG_FILE_SCAN_DIR;")/php-extensions-intl.ini"

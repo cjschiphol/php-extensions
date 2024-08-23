@@ -10,14 +10,13 @@ arch="x86_64"
 license="GPL"
 depends_dev=""
 depends="icu icu-data-full"
-install=""
-source="https://github.com/cjschiphol/php-extensions/releases/download/intl-8.3.10/intl-8.3.10-extension-x86_64-alpine.tar.gz"
+install="$pkgname.post-install $pkgname.post-deinstall"
+source="https://github.com/cjschiphol/php-extensions/releases/download/intl-8.3.10/intl-8.3.10-extension-aarch64-alpine.tar.gz"
 options="!check"
 
 package() {
-    mkdir -p "$pkgdir"
-    cp -r "$srcdir"/extension/*.so "$pkgdir"
-    ls -al .
+    mkdir -p "$pkgdir/lib/php-extensions"
+    cp -r "$srcdir"/extension/*.so "$pkgdir/lib/php-extensions"
 }
 
 build() {
