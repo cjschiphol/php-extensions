@@ -44,3 +44,7 @@ jobs:
           fail_on_unmatched_files: true
           files: |
             packages/aarch64/php-extensions-intl-8.3.10-r0.apk
+      - name: Update APK repo
+        run: |
+          git checkout gh-pages
+          

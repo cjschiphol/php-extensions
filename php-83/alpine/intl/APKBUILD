@@ -6,7 +6,7 @@ pkgrel=0
 pkgdesc="Intl PHP extension"
 
 url="https://github.com/cjschiphol/php-extensions"
-arch="x86_64"
+arch="aarch64"
 license="GPL"
 depends_dev=""
 depends="icu icu-data-full"
