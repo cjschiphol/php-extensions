@@ -47,4 +47,5 @@ jobs:
       - name: Update APK repo
         run: |
           git checkout gh-pages
+          ls -al packages
           
