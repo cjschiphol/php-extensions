@@ -43,13 +43,12 @@ jobs:
           token: ${{ secrets.DCS_PAT }}
           fail_on_unmatched_files: true
           files: |
-            packages/aarch64/php-extensions-intl-8.3.10-r0.apk
+            packages/**/php-extensions-intl-8.3.10-r0.apk
       - name: Update APK repo
         run: |
           git checkout gh-pages
           docker run --rm -it -v ./packages:/packages alpinelinux/build-base:latest \
-            ls -al /packages && 
-            apk index -o /packages/APKINDEX.tar.gz /packages/**/*.apk
+            apk index -o /packages/APKINDEX.tar.gz /packages/aarch64/*.apk /packages/x86_64/*.apk
           ls -al packages
          
           
