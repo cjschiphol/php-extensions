@@ -48,4 +48,6 @@ jobs:
         run: |
           git checkout gh-pages
           ls -al packages
+          apk index -o packages/APKINDEX.tar.gz packages/**/*.apk
+          
           
