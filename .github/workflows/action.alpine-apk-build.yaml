@@ -47,7 +47,9 @@ jobs:
       - name: Update APK repo
         run: |
           git checkout gh-pages
+          docker run --rm -it -v ./packages:/packages alpinelinux/build-base:latest \
+            apk index -o /packages/APKINDEX.tar.gz /packages/**/*.apk
           ls -al packages
-          apk index -o packages/APKINDEX.tar.gz packages/**/*.apk
+         
           
           
