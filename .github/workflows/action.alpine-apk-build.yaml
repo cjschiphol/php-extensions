@@ -48,7 +48,7 @@ jobs:
         run: |
           git checkout gh-pages
           docker run --rm -it -v ./packages:/packages alpinelinux/build-base:latest \
-            apk index -o /packages/APKINDEX.tar.gz /packages/aarch64/*.apk /packages/x86_64/*.apk
+            apk index -o /packages/APKINDEX.tar.gz /packages/**/*.apk
           ls -al packages
          
           
