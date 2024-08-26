@@ -1,5 +1,0 @@
-#!/bin/sh
-
-/bin/ln -s /lib/php-extensions/intl.so "$(/usr/local/bin/php -r "echo ini_get ('extension_dir');")"
-
-/bin/echo "extension=intl" > "$(/usr/local/bin/php -r "echo PHP_CONFIG_FILE_SCAN_DIR;")/php-extensions-intl.ini"

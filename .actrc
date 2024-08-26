@@ -1,4 +1,0 @@
--e .actevent.json
---secret-file ./.secrets
---insecure-secrets
---artifact-server-path artifacts
