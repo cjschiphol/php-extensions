@@ -51,7 +51,7 @@ jobs:
           docker run --rm -it \
             -v $GITHUB_WORKSPACE/packages:/packages alpinelinux/build-base:latest \
             apk index --merge --verbose --update-cache --allow-untrusted --no-interactive -x /packages/APKINDEX.tar.gz -o /packages/APKINDEX.tar.gz /packages/aarch64/*.apk /packages/x86_64/*.apk
-          ls -al $GITHUB_WORKSPACE/packages
+          ls -al $GITHUB_WORKSPACE/packages/aarch64
          
           
           
