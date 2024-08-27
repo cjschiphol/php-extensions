@@ -30,7 +30,7 @@ jobs:
         run: |        
           CONTAINERID=$(docker run -d "${{ steps.docker_build.outputs.imageid }}" sleep 60)
           docker cp "$CONTAINERID":/packages/ $GITHUB_WORKSPACE
-          docker kill "$CONTAINERID"
+          docker rm -f "$CONTAINERID"
           ls -al $GITHUB_WORKSPACE/packages
       - name: Release
         uses: softprops/action-gh-release@v2
