@@ -61,7 +61,7 @@ jobs:
           git checkout --progress --force -B "$GH_PAGES_BRANCH" refs/remotes/origin/"$GH_PAGES_BRANCH"
           
           # Copy current packages.
-          docker run --rm -it \
+          docker run --rm \
             -v "$GITHUB_WORKSPACE/packages:/packages" alpine:latest \
             sh -c "
               apk index --merge --verbose --update-cache --allow-untrusted --no-interactive -x ./APKINDEX.tar.gz -o ./APKINDEX.tar.gz ./aarch64/*.apk ./x86_64/*.apk
