@@ -65,7 +65,7 @@ jobs:
             -v "$GITHUB_WORKSPACE/packages:/packages" alpine:latest \
             sh -c "
               apk index --merge --verbose --update-cache --allow-untrusted --no-interactive -x ./APKINDEX.tar.gz -o ./APKINDEX.tar.gz ./aarch64/*.apk ./x86_64/*.apk
-              ls -al /packages
+              ls -al /packages/x86_64/
             "
           ls -al $GITHUB_WORKSPACE/packages/
           
