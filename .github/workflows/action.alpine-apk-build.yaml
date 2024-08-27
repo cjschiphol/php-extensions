@@ -47,8 +47,20 @@ jobs:
             packages/**/php-extensions-intl-8.3.10-r0.apk
       - name: Update APK repo
         run: |
-          git fetch --all
-          git checkout gh-pages
+          # Set current directory as a safe directory.
+          git config --global --add safe.directory /github/workspace
+          ORIGINAL_BRANCH="$(git symbolic-ref --short HEAD)"
+          GH_PAGES_BRANCH=gh-pages
+          
+          # Checkout gh-pages branch
+          if ! git fetch -n --no-recurse-submodules --depth=1 origin "$GH_PAGES_BRANCH"; then
+            echo "The branch gh-pages doesn't exist."
+            exit 1
+          fi
+          
+          git checkout --progress --force -B "$GH_PAGES_BRANCH" refs/remotes/origin/"$GH_PAGES_BRANCH"
+          
+          # Copy current packages.
           docker run --rm -it \
             -v "$GITHUB_WORKSPACE/packages:/packages" alpine:latest \
             sh -c "
@@ -58,8 +70,9 @@ jobs:
           ls -al $GITHUB_WORKSPACE/packages/
           
           git add packages/
-          git commit -m "Add newly created packages"
-          git push
+          git -c user.name="$GITHUB_ACTOR" -c user.email="$GITHUB_ACTOR@users.noreply.github.com" commit -m "${INPUT_COMMIT_MESSAGE:-Update packages}" && \
+            git push origin "$GH_PAGES_BRANCH" || echo Nothing to commit
+        
          
           
           
