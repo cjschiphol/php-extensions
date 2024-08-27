@@ -29,7 +29,7 @@ jobs:
       - name: Copy apk from docker image
         run: |        
           CONTAINERID=$(docker run -d "${{ steps.docker_build.outputs.imageid }}" sleep 60)
-          docker cp "$CONTAINERID":/packages/ $GITHUB_WORKSPACE/packages
+          docker cp "$CONTAINERID":/packages/ $GITHUB_WORKSPACE
           docker kill "$CONTAINERID"
           ls -al $GITHUB_WORKSPACE/packages
       - name: Release
@@ -50,9 +50,9 @@ jobs:
           ls -al $GITHUB_WORKSPACE/packages
           git checkout gh-pages
           docker run --rm -it \
-            -v $GITHUB_WORKSPACE/packages:/workspace -w /workspace alpinelinux/build-base:latest \
+            -v $GITHUB_WORKSPACE/packages:/packages -w /packages alpinelinux/build-base:latest \
             ls -al .;
-            apk index --merge --verbose --update-cache --allow-untrusted --no-interactive -x ./packages/APKINDEX.tar.gz -o ./packages/APKINDEX.tar.gz ./packages/aarch64/*.apk ./packages/x86_64/*.apk
+            apk index --merge --verbose --update-cache --allow-untrusted --no-interactive -x ./APKINDEX.tar.gz -o ./APKINDEX.tar.gz ./aarch64/*.apk ./x86_64/*.apk
           ls -al $GITHUB_WORKSPACE/packages/
          
           
