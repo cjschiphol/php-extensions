@@ -50,11 +50,13 @@ jobs:
           git checkout gh-pages
           ls -al $GITHUB_WORKSPACE/packages
           docker run --rm -it \
-            -v "$GITHUB_WORKSPACE/packages:/packages" -w /packages alpine:latest \
-            cd /packages \
-            && apk index --merge --verbose --update-cache --allow-untrusted --no-interactive -x ./APKINDEX.tar.gz -o ./APKINDEX.tar.gz ./aarch64/*.apk ./x86_64/*.apk \
-            && ls -al /packages \
-            && pwd
+            -v "$GITHUB_WORKSPACE/packages:/packages" alpine:latest \
+            sh -c "
+              cd /packages
+              apk index --merge --verbose --update-cache --allow-untrusted --no-interactive -x ./APKINDEX.tar.gz -o ./APKINDEX.tar.gz ./aarch64/*.apk ./x86_64/*.apk
+              ls -al /packages
+              pwd
+            "
           ls -al $GITHUB_WORKSPACE/packages/
          
           
