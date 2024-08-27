@@ -47,6 +47,7 @@ jobs:
             packages/**/php-extensions-intl-8.3.10-r0.apk
       - name: Update APK repo
         run: |
+          git fetch --all
           git checkout gh-pages
           docker run --rm -it \
             -v "$GITHUB_WORKSPACE/packages:/packages" alpine:latest \
