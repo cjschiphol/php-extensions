@@ -31,6 +31,7 @@ jobs:
           CONTAINERID=$(docker run -d "${{ steps.docker_build.outputs.imageid }}" sleep 60)
           docker cp "$CONTAINERID":/packages/ $GITHUB_WORKSPACE/packages
           docker kill "$CONTAINERID"
+          ls -al $GITHUB_WORKSPACE/packages
       - name: Release
         uses: softprops/action-gh-release@v2
         #if: startsWith(github.ref, 'refs/tags/')
@@ -47,6 +48,7 @@ jobs:
       - name: Update APK repo
         run: |
           git checkout gh-pages
+          ls -al $GITHUB_WORKSPACE/packages
           docker run --rm -it \
             -v $GITHUB_WORKSPACE/packages:/packages alpinelinux/build-base:latest \
             tree /packages &&
