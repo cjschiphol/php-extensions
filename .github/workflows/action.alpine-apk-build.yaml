@@ -53,7 +53,6 @@ jobs:
             sh -c "
               apk index --merge --verbose --update-cache --allow-untrusted --no-interactive -x ./APKINDEX.tar.gz -o ./APKINDEX.tar.gz ./aarch64/*.apk ./x86_64/*.apk
               ls -al /packages
-              pwd
             "
           ls -al $GITHUB_WORKSPACE/packages/
           
