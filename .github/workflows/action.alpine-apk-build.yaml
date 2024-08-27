@@ -50,6 +50,7 @@ jobs:
           git checkout gh-pages
           docker run --rm -it \
             -v $GITHUB_WORKSPACE/packages:/workspace -w /workspace alpinelinux/build-base:latest \
+            ls -al ./packages;
             apk index --merge --verbose --update-cache --allow-untrusted --no-interactive -x ./packages/APKINDEX.tar.gz -o ./packages/APKINDEX.tar.gz ./packages/aarch64/*.apk ./packages/x86_64/*.apk
           ls -al $GITHUB_WORKSPACE/packages/
          
